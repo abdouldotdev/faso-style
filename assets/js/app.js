@@ -299,6 +299,58 @@ function renderRecent() {
   $("#recentRail").innerHTML = items.map(atelierCard).join("");
 }
 
+/** Récapitulatif WhatsApp de la sélection (le « panier »). */
+function selectionMessage() {
+  const items = store.favorites.map((id) => byId[id]).filter(Boolean);
+  const lignes = items.map((a, i) => [
+    `${i + 1}. ${a.name}`,
+    `   ${a.city} · ${a.quartier}`,
+    `   ${a.specs.join(", ")}`,
+    `   Délai indicatif : ${delayLabel(a.delayDays)} · Budget : ${PRICE_LABELS[a.price]}`,
+    `   WhatsApp : ${formatPhone(a.phone)}`,
+  ].join("\n"));
+
+  return [
+    `Bonjour, voici ma sélection Faso Style (${plural(items.length, "atelier", "ateliers")}) :`,
+    "",
+    lignes.join("\n\n"),
+    "",
+    "Envoyé depuis Faso Style — https://faso-style.vercel.app",
+  ].join("\n");
+}
+
+function sendSelection() {
+  const items = store.favorites.map((id) => byId[id]).filter(Boolean);
+  if (!items.length) return;
+
+  // Un seul atelier : on ouvre directement sa conversation.
+  // Plusieurs : WhatsApp laisse choisir le destinataire du récapitulatif.
+  const url = items.length === 1
+    ? `https://wa.me/${items[0].phone}?text=${encodeURIComponent(
+        `Bonjour ${items[0].name}, je vous ai trouvé(e) sur Faso Style et j'aimerais avoir des renseignements.`)}`
+    : `https://wa.me/?text=${encodeURIComponent(selectionMessage())}`;
+
+  window.open(url, "_blank", "noopener");
+}
+
+function renderSelectionBar() {
+  const n = store.favorites.filter((id) => byId[id]).length;
+  const bar = $("#selectionBar");
+  if (!bar) return;
+  bar.innerHTML = n === 0 ? "" : `
+    <div class="selection-bar">
+      <div class="grow">
+        <b class="t-title-sm">${plural(n, "atelier sélectionné", "ateliers sélectionnés")}</b>
+        <span class="t-body-sm t-muted">${
+          n === 1 ? "Ouvre la conversation avec l'atelier"
+                  : "Envoie le récapitulatif complet de votre sélection"}</span>
+      </div>
+      <button class="btn btn--primary" data-send-selection>
+        ${icon("ic-whatsapp", 18, "icon")} Envoyer
+      </button>
+    </div>`;
+}
+
 function renderFavoris() {
   const items = store.favorites.map((id) => byId[id]).filter(Boolean);
   $("#listFavoris").innerHTML = items.length
@@ -309,6 +361,8 @@ function renderFavoris() {
   const badge = $("#favBadge");
   badge.hidden = items.length === 0;
   badge.textContent = items.length;
+
+  renderSelectionBar();
 }
 
 function renderRequests() {
@@ -870,6 +924,8 @@ function bind() {
       save(); renderRequests(); toast("Demande supprimée");
       return;
     }
+
+    if (t.closest("[data-send-selection]")) { haptic(); sendSelection(); return; }
 
     if (t.closest("[data-install]")) {
       deferredPrompt?.prompt();

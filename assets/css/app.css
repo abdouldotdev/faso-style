@@ -663,6 +663,26 @@
   font: var(--text-body-sm);
 }
 .legal p + p { margin-top: var(--space-2); }
+/* --------------------------------------------------------------------------
+   Barre de sélection (favoris) — envoi du récapitulatif WhatsApp
+   -------------------------------------------------------------------------- */
+.selection-bar {
+  position: sticky;
+  bottom: var(--space-3);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-5) var(--space-4) var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-3);
+}
+.selection-bar b { display: block; }
+.selection-bar span { display: block; margin-top: 1px; }
+
 .legal .credit {
   font: var(--text-label-md);
   color: var(--text-muted);

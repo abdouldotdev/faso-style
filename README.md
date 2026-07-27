@@ -25,6 +25,11 @@ Ouahigouya, Banfora, Fada N'Gourma, Kaya, Dédougou, Gaoua, Tenkodogo, Dori),
 services, distribution des notes, avis clients, publication d'un avis,
 contact WhatsApp pré-rempli, appel direct, partage natif.
 
+**Sélection multiple** — les favoris forment un panier : un bouton envoie sur
+WhatsApp le récapitulatif complet (nom, ville, quartier, spécialités, délai,
+budget, numéro de chaque atelier). Avec un seul atelier retenu, le bouton ouvre
+directement sa conversation.
+
 **Le reste** — favoris persistants, historique de consultation, mise en avant
 éditoriale, formulaire d'inscription pour les ateliers, thème clair/sombre,
 indicateur hors connexion, installation sur l'écran d'accueil.
