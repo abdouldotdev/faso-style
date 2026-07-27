@@ -589,6 +589,41 @@ function renderStarPicker() {
     </button>`).join("");
 }
 
+/* ------------------------------------------------- sheet : comment ça marche */
+const STEPS = [
+  ["Cherchez", "Filtrez par ville, spécialité, budget, délai ou service : livraison, retouches, essayage à domicile, location de tenues…"],
+  ["Comparez", "Chaque fiche présente le quartier, le délai indicatif, le niveau de prix, la note moyenne et les avis clients."],
+  ["Sélectionnez", "Ajoutez plusieurs ateliers à votre sélection : elle vous suit depuis l'accueil comme depuis vos favoris."],
+  ["Contactez", "Un appui envoie sur WhatsApp le récapitulatif complet de votre sélection, message déjà pré-rempli."],
+];
+
+function howItWorksSheet() {
+  const head = `
+    <div class="row between gap-3">
+      <h3 class="t-title-md" id="sheetTitle">Comment ça marche</h3>
+      <button class="btn btn--icon" data-close-sheet aria-label="Fermer">${icon("ic-close", 19)}</button>
+    </div>`;
+
+  const body = `
+    <div class="steps">
+      ${STEPS.map(([titre, texte], i) => `
+        <div class="step">
+          <span class="step__idx">${i + 1}</span>
+          <div>
+            <h3>${titre}</h3>
+            <p>${texte}</p>
+          </div>
+        </div>`).join("")}
+    </div>`;
+
+  const foot = `
+    <div class="sheet__actions">
+      <button class="btn btn--primary btn--block" data-close-sheet>J'ai compris</button>
+    </div>`;
+
+  openSheet({ head, body, foot });
+}
+
 /* -------------------------------------------------------- sheet : filtres */
 function filtersSheet() {
   const head = `
@@ -724,15 +759,27 @@ async function share(id) {
   } catch { /* annulé par l'utilisateur */ }
 }
 
+/** Vues atteignables ; « rejoindre » n'a pas d'onglet, on y entre depuis le profil. */
+const VIEWS = ["decouvrir", "favoris", "rejoindre", "profil"];
+const PARENT_VIEW = { rejoindre: "profil" };
+
 function setView(view) {
   state.view = view;
   $$(".view").forEach((v) => v.classList.toggle("is-active", v.id === `view-${view}`));
-  $$(".tab").forEach((t) => t.setAttribute("aria-selected", String(t.dataset.view === view)));
+  $$(".tab").forEach((t) =>
+    t.setAttribute("aria-selected", String(t.dataset.view === (PARENT_VIEW[view] || view))));
+
+  const back = $("#appbarBack");
+  const logo = $("#appbarLogo");
+  if (back) back.hidden = !PARENT_VIEW[view];
+  // toggleAttribute : la propriété .hidden n'existe pas sur un élément SVG.
+  if (logo) logo.toggleAttribute("hidden", Boolean(PARENT_VIEW[view]));
+
   const titles = {
     decouvrir: ["Faso Style", "Annuaire des couturiers"],
     favoris:   ["Favoris", "Vos ateliers enregistrés"],
-    rejoindre: ["Rejoindre", "Inscrire mon atelier"],
-    infos:     ["Infos", "À propos de l'application"],
+    rejoindre: ["Inscrire mon atelier", "Rejoindre l'annuaire"],
+    profil:    ["Profil", "Réglages et informations"],
   }[view];
   $("#appbarTitle").textContent = titles[0];
   $("#appbarSub").textContent = titles[1];
@@ -855,6 +902,7 @@ function bind() {
     renderList(); renderSuggestions(); input.focus();
   });
 
+  $("#appbarBack").addEventListener("click", () => setView(PARENT_VIEW[state.view] || "decouvrir"));
   $("#openFilters").addEventListener("click", () => { haptic(); filtersSheet(); });
   $("#sortBtn").addEventListener("click", () => { haptic(); filtersSheet(); });
   $("#resetFilters").addEventListener("click", () => { clearFilters(); toast("Filtres effacés"); });
@@ -948,6 +996,11 @@ function bind() {
       save(); renderRequests(); toast("Demande supprimée");
       return;
     }
+
+    if (t.closest('[data-sheet="how"]')) { haptic(); howItWorksSheet(); return; }
+
+    const goto = t.closest("[data-goto]");
+    if (goto) { haptic(); setView(goto.dataset.goto); return; }
 
     if (t.closest("[data-send-selection]")) { haptic(); sendSelection(); return; }
 
@@ -1082,7 +1135,8 @@ function route() {
   const h = location.hash.replace(/^#\//, "");
   const [seg, param] = h.split("/");
   if (seg === "atelier" && byId[param]) { setView("decouvrir"); openProfile(param); return; }
-  if (["decouvrir", "favoris", "rejoindre", "infos"].includes(seg)) setView(seg);
+  if (seg === "infos") { setView("profil"); return; }   // ancien lien
+  if (VIEWS.includes(seg)) setView(seg);
 }
 
 /* -------------------------------------------------------------- bootstrap */

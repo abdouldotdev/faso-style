@@ -30,8 +30,8 @@
 
 <link rel="preload" href="./assets/fonts/poppins-latin-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="./assets/fonts/poppins-latin-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="./assets/css/design-system.css?v=4">
-<link rel="stylesheet" href="./assets/css/app.css?v=4">
+<link rel="stylesheet" href="./assets/css/design-system.css?v=5">
+<link rel="stylesheet" href="./assets/css/app.css?v=5">
 </head>
 <body>
 
@@ -104,6 +104,15 @@
   <symbol id="ic-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
     <path d="M3.5 16.5l5.5-5.5 3.5 3.5 7-7"/><path d="M15 7.5h4.5V12"/>
   </symbol>
+  <symbol id="ic-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="8.2" r="3.6"/><path d="M4.8 20a7.2 7.2 0 0 1 14.4 0"/>
+  </symbol>
+  <symbol id="ic-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9.5 5.5l7 6.5-7 6.5"/>
+  </symbol>
+  <symbol id="ic-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14.5 5.5l-7 6.5 7 6.5"/>
+  </symbol>
   <symbol id="logo-mark" viewBox="0 0 120 120">
     <circle cx="60" cy="60" r="56" fill="var(--surface)" stroke="var(--primary)" stroke-width="5"/>
     <circle cx="60" cy="60" r="44" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="2 6"/>
@@ -116,7 +125,10 @@
 
   <header class="appbar" id="appbar">
     <div class="appbar__inner">
-      <svg class="appbar__logo" aria-hidden="true"><use href="#logo-mark"/></svg>
+      <button class="btn btn--icon" id="appbarBack" aria-label="Retour" hidden>
+        <svg width="20" height="20" aria-hidden="true"><use href="#ic-back"/></svg>
+      </button>
+      <svg class="appbar__logo" id="appbarLogo" aria-hidden="true"><use href="#logo-mark"/></svg>
       <div class="appbar__title">
         <h1 id="appbarTitle">Faso Style</h1>
         <p id="appbarSub">Annuaire des couturiers</p>
@@ -201,7 +213,7 @@
     </section>
 
     <!-- ============ VUE : REJOINDRE ============ -->
-    <section class="view" id="view-rejoindre" role="tabpanel" aria-labelledby="tab-rejoindre">
+    <section class="view" id="view-rejoindre" role="region" aria-label="Inscrire mon atelier">
       <div class="section">
         <div class="section__head">
           <h2>Inscrire mon atelier</h2>
@@ -251,36 +263,31 @@
       </div>
     </section>
 
-    <!-- ============ VUE : INFOS ============ -->
-    <section class="view" id="view-infos" role="tabpanel" aria-labelledby="tab-infos">
+    <!-- ============ VUE : PROFIL ============ -->
+    <section class="view" id="view-profil" role="tabpanel" aria-labelledby="tab-profil">
       <div class="section">
-        <div class="section__head">
-          <h2>Comment ça marche</h2>
-          <p>Trois étapes, du besoin du client jusqu'au rendez-vous chez le couturier.</p>
-        </div>
-        <div class="steps">
-          <div class="step">
-            <span class="step__idx">1</span>
-            <div>
-              <h3>Cherchez</h3>
-              <p>Filtrez par ville, spécialité, budget, délai ou service : livraison, retouches, essayage à domicile, location de tenues…</p>
-            </div>
-          </div>
-          <div class="step">
-            <span class="step__idx">2</span>
-            <div>
-              <h3>Comparez</h3>
-              <p>Chaque fiche présente le quartier, le délai indicatif, le niveau de prix, la note moyenne et les avis clients.</p>
-            </div>
-          </div>
-          <div class="step">
-            <span class="step__idx">3</span>
-            <div>
-              <h3>Contactez</h3>
-              <p>Un appui ouvre une conversation WhatsApp avec l'atelier, message déjà pré-rempli — ou lance un appel direct.</p>
-            </div>
-          </div>
-        </div>
+        <nav class="menu" aria-label="Menu du profil">
+          <button class="menu-row" data-sheet="how">
+            <span class="menu-row__icon">
+              <svg width="19" height="19" aria-hidden="true"><use href="#ic-info"/></svg>
+            </span>
+            <span class="menu-row__body">
+              <b>Comment ça marche</b>
+              <span>Du besoin au rendez-vous chez le couturier</span>
+            </span>
+            <svg class="menu-row__chevron" width="17" height="17" aria-hidden="true"><use href="#ic-chevron"/></svg>
+          </button>
+          <button class="menu-row" data-goto="rejoindre">
+            <span class="menu-row__icon">
+              <svg width="19" height="19" aria-hidden="true"><use href="#ic-plus-circle"/></svg>
+            </span>
+            <span class="menu-row__body">
+              <b>Inscrire mon atelier</b>
+              <span>Rejoindre l'annuaire Faso Style</span>
+            </span>
+            <svg class="menu-row__chevron" width="17" height="17" aria-hidden="true"><use href="#ic-chevron"/></svg>
+          </button>
+        </nav>
       </div>
 
       <div class="section">
@@ -310,7 +317,7 @@
 
   </main>
 
-  <nav class="tabbar" role="tablist" aria-label="Navigation principale">
+  <nav class="tabbar tabbar--3" role="tablist" aria-label="Navigation principale">
     <button class="tab" role="tab" id="tab-decouvrir" data-view="decouvrir" aria-selected="true">
       <svg aria-hidden="true"><use href="#ic-compass"/></svg><span>Découvrir</span>
     </button>
@@ -318,11 +325,8 @@
       <svg aria-hidden="true"><use href="#ic-heart"/></svg><span>Favoris</span>
       <span class="tab__badge" id="favBadge" hidden>0</span>
     </button>
-    <button class="tab" role="tab" id="tab-rejoindre" data-view="rejoindre" aria-selected="false">
-      <svg aria-hidden="true"><use href="#ic-plus-circle"/></svg><span>Rejoindre</span>
-    </button>
-    <button class="tab" role="tab" id="tab-infos" data-view="infos" aria-selected="false">
-      <svg aria-hidden="true"><use href="#ic-info"/></svg><span>Infos</span>
+    <button class="tab" role="tab" id="tab-profil" data-view="profil" aria-selected="false">
+      <svg aria-hidden="true"><use href="#ic-user"/></svg><span>Profil</span>
     </button>
   </nav>
 
@@ -343,7 +347,7 @@
   <div class="offline-bar" id="offlineBar" role="status">Mode hors connexion — données servies depuis le cache</div>
 </div>
 
-<script src="./assets/js/data.js?v=4" defer></script>
-<script src="./assets/js/app.js?v=4" defer></script>
+<script src="./assets/js/data.js?v=5" defer></script>
+<script src="./assets/js/app.js?v=5" defer></script>
 </body>
 </html>

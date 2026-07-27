@@ -30,9 +30,15 @@ WhatsApp le récapitulatif complet (nom, ville, quartier, spécialités, délai,
 budget, numéro de chaque atelier). Avec un seul atelier retenu, le bouton ouvre
 directement sa conversation.
 
+**Navigation** — trois onglets : Découvrir, Favoris, Profil. Le profil donne
+accès à « Comment ça marche » (feuille) et à l'inscription d'un atelier.
+
 **Le reste** — favoris persistants, historique de consultation, mise en avant
-éditoriale, formulaire d'inscription pour les ateliers, thème clair/sombre,
-indicateur hors connexion, installation sur l'écran d'accueil.
+éditoriale, thème clair/sombre, indicateur hors connexion, installation sur
+l'écran d'accueil.
+
+Toutes les prises de contact aboutissent au **+226 65 91 52 20**
+(`CONTACT_PHONE` dans `assets/js/app.js`).
 
 ## Design system
 

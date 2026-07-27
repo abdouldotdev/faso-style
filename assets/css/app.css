@@ -84,6 +84,7 @@
 /* --------------------------------------------------------------------------
    Tab bar
    -------------------------------------------------------------------------- */
+.tabbar--3 { grid-template-columns: repeat(3, 1fr); }
 .tabbar {
   position: fixed;
   bottom: 0;
@@ -595,6 +596,42 @@
 }
 .stat-bar__track i { display: block; height: 100%; border-radius: inherit; }
 .stat-bar .t-label { font: var(--text-label-sm); }
+
+/* --------------------------------------------------------------------------
+   Menu du profil
+   -------------------------------------------------------------------------- */
+.menu {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+}
+.menu-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-4);
+  text-align: left;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.menu-row + .menu-row { border-top: 1px solid var(--border); }
+.menu-row:active { background: var(--surface-sunken); }
+.menu-row__icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  border-radius: var(--radius-md);
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+.menu-row__body { flex: 1; min-width: 0; }
+.menu-row__body b { display: block; font: var(--text-title-sm); }
+.menu-row__body span { display: block; font: var(--text-body-sm); color: var(--text-muted); margin-top: 1px; }
+.menu-row__chevron { color: var(--text-subtle); flex: none; }
 
 .steps { display: flex; flex-direction: column; gap: var(--space-3); }
 .step {

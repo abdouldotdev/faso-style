@@ -277,6 +277,10 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* L'attribut hidden doit l'emporter : plusieurs composants définissent un
+   display via leur classe, qui bat la règle display:none du navigateur. */
+[hidden] { display: none !important; }
+
 h1, h2, h3, h4, p, figure { margin: 0; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 img, svg { display: block; max-width: 100%; }
