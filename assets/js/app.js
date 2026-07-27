@@ -42,6 +42,10 @@ const initials = (name) =>
 
 const haptic = (ms = 8) => navigator.vibrate?.(ms);
 
+/** Toutes les prises de contact aboutissent à ce numéro. */
+const CONTACT_PHONE = "22665915220";
+const waLink = (text) => `https://wa.me/${CONTACT_PHONE}?text=${encodeURIComponent(text)}`;
+
 /* ------------------------------------------------------------- persistence */
 const KEY = "fasostyle.v1";
 
@@ -244,8 +248,12 @@ const emptyState = (title, text, iconId = "ic-inbox") => `
   </div>`;
 
 /* -------------------------------------------------------------- rendering */
+/** Les rails de chips ne vivent plus que dans la feuille de filtres :
+    cette fonction ne fait rien si la page ne les expose pas. */
 function renderRails() {
   const cityRail = $("#cityRail");
+  const specRail = $("#specRail");
+  if (!cityRail || !specRail) return;
   const counts = Object.fromEntries(CITIES.map((c) => [c.name, 0]));
   for (const a of ATELIERS) counts[a.city]++;
 
@@ -258,7 +266,7 @@ function renderRails() {
         <span class="chip__count">${counts[c.name]}</span>
       </button>`).join("");
 
-  $("#specRail").innerHTML = SPECIALTIES.map((s) => `
+  specRail.innerHTML = SPECIALTIES.map((s) => `
     <button class="chip chip--sm" data-spec="${esc(s.name)}" aria-pressed="${state.specs.has(s.name)}">
       ${esc(s.name)}<span class="chip__count">${s.count}</span>
     </button>`).join("");
@@ -272,6 +280,8 @@ function renderList() {
   $("#listAteliers").innerHTML = list.length
     ? list.map(atelierRow).join("")
     : emptyState("Aucun atelier trouvé", "Essayez une autre ville, une autre spécialité ou élargissez vos filtres.", "ic-search");
+
+  renderSelectionBar();
 
   $("#resultCount").textContent = list.length
     ? plural(list.length, "atelier", "ateliers")
@@ -307,7 +317,6 @@ function selectionMessage() {
     `   ${a.city} · ${a.quartier}`,
     `   ${a.specs.join(", ")}`,
     `   Délai indicatif : ${delayLabel(a.delayDays)} · Budget : ${PRICE_LABELS[a.price]}`,
-    `   WhatsApp : ${formatPhone(a.phone)}`,
   ].join("\n"));
 
   return [
@@ -323,21 +332,12 @@ function sendSelection() {
   const items = store.favorites.map((id) => byId[id]).filter(Boolean);
   if (!items.length) return;
 
-  // Un seul atelier : on ouvre directement sa conversation.
-  // Plusieurs : WhatsApp laisse choisir le destinataire du récapitulatif.
-  const url = items.length === 1
-    ? `https://wa.me/${items[0].phone}?text=${encodeURIComponent(
-        `Bonjour ${items[0].name}, je vous ai trouvé(e) sur Faso Style et j'aimerais avoir des renseignements.`)}`
-    : `https://wa.me/?text=${encodeURIComponent(selectionMessage())}`;
-
-  window.open(url, "_blank", "noopener");
+  window.open(waLink(selectionMessage()), "_blank", "noopener");
 }
 
 function renderSelectionBar() {
   const n = store.favorites.filter((id) => byId[id]).length;
-  const bar = $("#selectionBar");
-  if (!bar) return;
-  bar.innerHTML = n === 0 ? "" : `
+  const html = n === 0 ? "" : `
     <div class="selection-bar">
       <div class="grow">
         <b class="t-title-sm">${plural(n, "atelier sélectionné", "ateliers sélectionnés")}</b>
@@ -349,6 +349,15 @@ function renderSelectionBar() {
         ${icon("ic-whatsapp", 18, "icon")} Envoyer
       </button>
     </div>`;
+
+  // Dans les favoris la barre suit la liste ; sur l'accueil elle flotte
+  // au-dessus de la barre d'onglets pour rester visible en permanence.
+  const fav = $("#selectionBar");
+  if (fav) fav.innerHTML = html;
+  const home = $("#selectionBarHome");
+  if (home) home.innerHTML = html.replace("selection-bar", "selection-bar selection-bar--float");
+
+  $(".app")?.classList.toggle("has-selection", n > 0);
 }
 
 function renderFavoris() {
@@ -535,17 +544,26 @@ function profileBody(a) {
 }
 
 function profileFoot(a) {
-  const msg = encodeURIComponent(
-    `Bonjour ${a.name}, je vous ai trouvé(e) sur Faso Style et j'aimerais avoir des renseignements.`);
+  const msg = [
+    "Bonjour, je vous contacte via Faso Style au sujet de :",
+    "",
+    `${a.name}`,
+    `${a.city} · ${a.quartier}`,
+    `${a.specs.join(", ")}`,
+    `Délai indicatif : ${delayLabel(a.delayDays)} · Budget : ${PRICE_LABELS[a.price]}`,
+    "",
+    "J'aimerais avoir des renseignements.",
+  ].join("\n");
+
   return `
     <div class="sheet__actions">
-      <a class="btn btn--primary grow" href="https://wa.me/${a.phone}?text=${msg}" target="_blank" rel="noopener">
+      <a class="btn btn--primary grow" href="${waLink(msg)}" target="_blank" rel="noopener">
         ${icon("ic-whatsapp", 18, "icon")} WhatsApp
       </a>
-      <a class="btn btn--outline btn--icon" href="tel:+${a.phone}" aria-label="Appeler ${esc(a.name)}">${icon("ic-phone", 18)}</a>
+      <a class="btn btn--outline btn--icon" href="tel:+${CONTACT_PHONE}" aria-label="Appeler Faso Style">${icon("ic-phone", 18)}</a>
       <button class="btn btn--outline btn--icon" data-share="${a.id}" aria-label="Partager">${icon("ic-share", 18)}</button>
     </div>
-    <p class="sheet__phone">${formatPhone(a.phone)}</p>`;
+    <p class="sheet__phone">${formatPhone(CONTACT_PHONE)}</p>`;
 }
 
 function openProfile(id) {
@@ -814,7 +832,13 @@ function renderInstall() {
 /* ------------------------------------------------------------------ events */
 function bind() {
   /* navigation */
-  $$(".tab").forEach((t) => t.addEventListener("click", () => { haptic(); setView(t.dataset.view); }));
+  // Délégation : un clic sur l'icône ou sur le libellé compte pour l'onglet.
+  $(".tabbar").addEventListener("click", (e) => {
+    const tab = e.target.closest(".tab");
+    if (!tab) return;
+    haptic();
+    setView(tab.dataset.view);
+  });
 
   /* recherche */
   const input = $("#searchInput");
@@ -1018,7 +1042,7 @@ function bind() {
     b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true");
   });
 
-  $("#resetData").addEventListener("click", () => {
+  $("#resetData")?.addEventListener("click", () => {
     if (!confirm("Effacer favoris, avis, historique et demandes enregistrés sur cet appareil ?")) return;
     store = defaultStore();
     save();

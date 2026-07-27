@@ -30,8 +30,8 @@
 
 <link rel="preload" href="./assets/fonts/poppins-latin-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="./assets/fonts/poppins-latin-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="./assets/css/design-system.css">
-<link rel="stylesheet" href="./assets/css/app.css">
+<link rel="stylesheet" href="./assets/css/design-system.css?v=4">
+<link rel="stylesheet" href="./assets/css/app.css?v=4">
 </head>
 <body>
 
@@ -151,8 +151,6 @@
           </button>
         </div>
         <div id="suggestSlot"></div>
-        <div class="rail" id="cityRail" role="group" aria-label="Filtrer par ville"></div>
-        <div class="rail" id="specRail" role="group" aria-label="Filtrer par spécialité"></div>
       </div>
 
       <!-- Coup de cœur -->
@@ -186,6 +184,7 @@
       </div>
 
       <div class="list" id="listAteliers"></div>
+      <div id="selectionBarHome"></div>
 
     </section>
 
@@ -299,21 +298,12 @@
         </div>
       </div>
 
-      <div class="section">
-        <div class="section__head"><h2>Données & confidentialité</h2></div>
-        <div class="card" style="padding:var(--space-5)">
-          <p class="t-body t-muted">
-            Favoris, avis, historique et demandes d'inscription sont stockés uniquement dans le navigateur de votre appareil.
-            Aucun compte, aucun serveur, aucun traceur.
-          </p>
-          <button class="btn btn--outline btn--block" id="resetData" style="margin-top:var(--space-4)">
-            Effacer mes données locales
-          </button>
-        </div>
-      </div>
-
       <div class="legal">
-        <p class="credit">Conçu par Ariane Builiou</p>
+        <p class="credit">
+          Conçu par
+          <a href="https://wa.me/22665915220?text=Bonjour%20Ariane%2C%20je%20vous%20contacte%20au%20sujet%20de%20Faso%20Style."
+             target="_blank" rel="noopener">Ariane Builiou</a>
+        </p>
         <p>Faso Style — fait pour les couturiers et stylistes du Burkina Faso.</p>
       </div>
     </section>
@@ -353,7 +343,7 @@
   <div class="offline-bar" id="offlineBar" role="status">Mode hors connexion — données servies depuis le cache</div>
 </div>
 
-<script src="./assets/js/data.js" defer></script>
-<script src="./assets/js/app.js" defer></script>
+<script src="./assets/js/data.js?v=4" defer></script>
+<script src="./assets/js/app.js?v=4" defer></script>
 </body>
 </html>

@@ -31,9 +31,9 @@
   z-index: var(--z-appbar);
   flex: none;
   padding-top: var(--safe-top);
-  background: color-mix(in srgb, var(--bg) 90%, transparent);
-  backdrop-filter: saturate(1.4) blur(14px);
-  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  /* Fond opaque : une barre collante translucide laisserait voir le contenu
+     défiler derrière, et color-mix() n'est pas garanti partout. */
+  background: var(--bg);
   transition: box-shadow var(--dur-base);
 }
 .appbar.is-scrolled { box-shadow: 0 1px 0 var(--border); }
@@ -94,9 +94,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   padding-bottom: var(--safe-bottom);
-  background: color-mix(in srgb, var(--bg-elevated) 94%, transparent);
-  backdrop-filter: saturate(1.5) blur(16px);
-  -webkit-backdrop-filter: saturate(1.5) blur(16px);
+  background: var(--bg-elevated);
   border-top: 1px solid var(--border);
   flex: none;
 }
@@ -197,10 +195,9 @@
   position: sticky;
   top: 0;
   z-index: calc(var(--z-appbar) - 1);
-  padding: var(--space-2) var(--space-4) var(--space-1);
-  background: color-mix(in srgb, var(--bg) 94%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  padding: var(--space-2) var(--space-4) var(--space-3);
+  background: var(--bg);
+  box-shadow: 0 1px 0 var(--border);
 }
 .filters .rail { padding-top: var(--space-2); padding-bottom: var(--space-1); }
 .search__clear {
@@ -576,12 +573,16 @@
 /* --------------------------------------------------------------------------
    Vue « Infos » — chiffres
    -------------------------------------------------------------------------- */
-.stat-grid { display: flex; flex-direction: column; gap: var(--space-3); }
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
 .stat-bar {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  padding: var(--space-4);
+  padding: var(--space-3);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -593,6 +594,7 @@
   overflow: hidden;
 }
 .stat-bar__track i { display: block; height: 100%; border-radius: inherit; }
+.stat-bar .t-label { font: var(--text-label-sm); }
 
 .steps { display: flex; flex-direction: column; gap: var(--space-3); }
 .step {
@@ -680,6 +682,19 @@
   border: 1px solid var(--border);
   box-shadow: var(--shadow-3);
 }
+/* Variante flottante (accueil) : toujours visible au-dessus des onglets. */
+.selection-bar--float {
+  position: fixed;
+  bottom: calc(var(--tabbar-h) + var(--safe-bottom) + var(--space-2));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(calc(100% - var(--space-7)), calc(var(--shell-max) - var(--space-7)));
+  margin: 0;
+  z-index: calc(var(--z-tabbar) - 1);
+}
+/* Réserve la place du panier flottant pour ne masquer aucune fiche. */
+.app.has-selection .app__main { padding-bottom: calc(var(--tabbar-h) + var(--safe-bottom) + 96px); }
+
 .selection-bar b { display: block; }
 .selection-bar span { display: block; margin-top: 1px; }
 
@@ -740,7 +755,9 @@
   .sheet,
   .sheet-scrim,
   .toast,
-  .offline-bar { position: absolute; }
+  .offline-bar,
+  .selection-bar--float { position: absolute; }
+  .selection-bar--float { bottom: calc(var(--tabbar-h) + var(--space-2)); }
   .sheet { max-height: 88%; }
   .toast { bottom: calc(var(--tabbar-h) + var(--space-4)); }
 }

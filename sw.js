@@ -4,7 +4,7 @@
    reste du réseau en stale-while-revalidate.
    ========================================================================== */
 
-const VERSION = "faso-style-v3";
+const VERSION = "faso-style-v4";
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-runtime`;
 
@@ -72,7 +72,25 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Ressources : cache d'abord, revalidation en arrière-plan.
+  // Code (JS/CSS) : réseau d'abord. Un cache-first ici peut resservir une
+  // version périmée et incompatible avec le HTML fraîchement livré — c'est
+  // exactement ce qui casse une mise à jour côté visiteur déjà venu.
+  if (/\.(js|css)$/.test(url.pathname)) {
+    event.respondWith(
+      fetch(request)
+        .then((res) => {
+          if (res.ok) {
+            const copy = res.clone();
+            caches.open(RUNTIME).then((c) => c.put(request, copy));
+          }
+          return res;
+        })
+        .catch(() => caches.match(request))
+    );
+    return;
+  }
+
+  // Polices, icônes, manifeste : cache d'abord, revalidation en arrière-plan.
   event.respondWith(
     caches.match(request).then((cached) => {
       const network = fetch(request)
