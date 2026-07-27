@@ -663,6 +663,11 @@
   font: var(--text-body-sm);
 }
 .legal p + p { margin-top: var(--space-2); }
+.legal .credit {
+  font: var(--text-label-md);
+  color: var(--text-muted);
+  margin-bottom: var(--space-1);
+}
 
 /* --------------------------------------------------------------------------
    Indicateur de budget — trois points, sans glyphe monétaire

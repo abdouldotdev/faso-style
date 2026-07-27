@@ -91,6 +91,10 @@ Favoris, avis publiés, historique et demandes d'inscription sont stockés dans 
 `localStorage` de l'appareil, sous la clé `fasostyle.v1`. Aucun compte, aucun
 serveur, aucun traceur. L'écran **Infos** permet de tout effacer.
 
+## Crédits
+
+Conçu par **Ariane Builiou**.
+
 ## Licence
 
 MIT.
