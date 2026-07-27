@@ -4,10 +4,8 @@
 Application web progressive (PWA) mobile — installable, utilisable hors connexion,
 sans compte ni serveur.
 
-> ⚠️ Prototype de démonstration : les 44 fiches d'ateliers et les avis sont des
-> **données d'illustration**. Aucun professionnel réel n'y figure. Lors d'un
-> lancement réel, chaque maison de couture serait recensée avec son consentement
-> et ses vraies coordonnées.
+Le catalogue livré avec l'application sert de jeu de démarrage : il se remplace
+intégralement en éditant `assets/js/data.js`, sans toucher au reste du code.
 
 ---
 
@@ -47,7 +45,7 @@ sous-ensembles latin et latin-ext, 48 Ko au total, aucun appel à Google Fonts.
 
 ## Stack
 
-Aucune dépendance, aucune étape de build. HTML, CSS et JavaScript (modules ES)
+Aucune dépendance, aucune étape de build. HTML, CSS et JavaScript natif
 servis tels quels.
 
 ```
@@ -63,6 +61,12 @@ assets/fonts/                 Poppins woff2
 assets/icons/                 icônes PWA + image Open Graph
 ```
 
+## Ouvrir l'application
+
+Un simple double-clic sur `index.html` suffit : l'application fonctionne en
+`file://`. Le service worker et l'installation sur l'écran d'accueil, eux,
+nécessitent un vrai serveur (voir ci-dessous).
+
 ## Développement
 
 ```bash
@@ -70,8 +74,8 @@ python3 -m http.server 8000     # ou n'importe quel serveur statique
 open http://localhost:8000
 ```
 
-Un serveur HTTP est nécessaire : les modules ES et le service worker ne
-fonctionnent pas depuis `file://`.
+Un serveur HTTP est nécessaire pour tester le service worker et
+l'installation ; le reste de l'application fonctionne aussi en `file://`.
 
 ## Déploiement
 

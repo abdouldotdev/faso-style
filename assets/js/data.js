@@ -1,10 +1,12 @@
 /* ==========================================================================
    FASO STYLE — CATALOGUE
+   Chargé comme script classique (pas de module ES) pour que l'app
+   fonctionne aussi en ouverture directe du fichier (file://).
    Données d'illustration pour le prototype. Aucune de ces fiches ne
    correspond à un professionnel réel : voir la mention légale de l'app.
    ========================================================================== */
 
-export const CITIES = [
+const CITIES = [
   { name: "Ouagadougou",    region: "Centre",         color: "#213A5C" },
   { name: "Bobo-Dioulasso", region: "Hauts-Bassins",  color: "#B5651D" },
   { name: "Koudougou",      region: "Centre-Ouest",   color: "#4F7355" },
@@ -18,11 +20,11 @@ export const CITIES = [
   { name: "Dori",           region: "Sahel",          color: "#96702A" },
 ];
 
-export const CITY_COLORS = Object.fromEntries(CITIES.map((c) => [c.name, c.color]));
-export const CITY_REGIONS = Object.fromEntries(CITIES.map((c) => [c.name, c.region]));
+const CITY_COLORS = Object.fromEntries(CITIES.map((c) => [c.name, c.color]));
+const CITY_REGIONS = Object.fromEntries(CITIES.map((c) => [c.name, c.region]));
 
 /** Services filtrables (facettes) */
-export const SERVICES = [
+const SERVICES = [
   "Sur mesure",
   "Retouches",
   "Livraison",
@@ -32,13 +34,13 @@ export const SERVICES = [
 ];
 
 /** Niveaux de budget indicatifs */
-export const PRICE_LABELS = {
+const PRICE_LABELS = {
   1: "Économique",
   2: "Intermédiaire",
   3: "Haut de gamme",
 };
 
-export const ATELIERS = [
+const ATELIERS = [
   /* ---------------------------- Ouagadougou ---------------------------- */
   { id:"sabou", name:"Atelier Sabou Couture", city:"Ouagadougou", quartier:"Tanghin",
     specs:["Tenue traditionnelle","Faso Dan Fani"], price:2, delayDays:6, since:2011, verified:true, featured:true,
@@ -282,7 +284,7 @@ export const ATELIERS = [
     phone:"22670101102" },
 ];
 
-export const SEED_REVIEWS = {
+const SEED_REVIEWS = {
   sabou: [
     { author:"Aïcha K.", rating:5, comment:"Tenue en Faso Dan Fani impeccable pour le 11 décembre, livrée à temps." },
     { author:"Boukary S.", rating:4, comment:"Bon travail, juste un peu d'attente sur le rendez-vous." },
@@ -379,7 +381,7 @@ export const SEED_REVIEWS = {
 };
 
 /** Spécialités dérivées du catalogue, triées par fréquence puis alphabétiquement. */
-export const SPECIALTIES = (() => {
+const SPECIALTIES = (() => {
   const counts = new Map();
   for (const a of ATELIERS) for (const s of a.specs) counts.set(s, (counts.get(s) || 0) + 1);
   return [...counts.entries()]
@@ -387,7 +389,7 @@ export const SPECIALTIES = (() => {
     .map(([name, count]) => ({ name, count }));
 })();
 
-export const SORTS = [
+const SORTS = [
   { id: "pertinence", label: "Pertinence" },
   { id: "note",       label: "Mieux notés" },
   { id: "avis",       label: "Plus d'avis" },

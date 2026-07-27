@@ -681,36 +681,25 @@
 .fact .price-dots i { width: 7px; height: 7px; }
 
 /* --------------------------------------------------------------------------
-   Grand écran — l'app reste un produit mobile, présenté dans un téléphone.
+   Grand écran — l'app reste une colonne mobile, simplement centrée.
    Placé en fin de fichier : ces règles doivent l'emporter sur les défauts.
    -------------------------------------------------------------------------- */
 @media (min-width: 760px) {
-  body {
-    display: grid;
-    place-items: center;
-    min-height: 100svh;
-    padding: 28px 16px;
-    background:
-      radial-gradient(120% 90% at 50% 0%, var(--bg) 0%, var(--surface-sunken) 70%);
-  }
+  body { background: var(--surface-sunken); }
 
   .app {
     --safe-top: 0px;
     --safe-bottom: 0px;
-    min-height: 0;
-    height: min(900px, calc(100svh - 56px));
+    height: 100svh;
+    min-height: 100svh;
     width: var(--shell-max);
-    border-radius: 44px;
-    overflow: hidden;
-    box-shadow:
-      0 0 0 9px #17140F,
-      0 0 0 11px rgba(255, 255, 255, 0.10),
-      0 40px 70px -24px rgba(23, 20, 15, 0.5);
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
   }
 
   .app__main { flex: 1; min-height: 0; padding-bottom: var(--space-6); }
 
-  /* Barre d'onglets : dans le flux, donc à l'intérieur du cadre. */
+  /* Barre d'onglets : dans le flux, donc calée en bas de la colonne. */
   .tabbar {
     position: relative;
     left: auto;
@@ -719,7 +708,7 @@
     width: 100%;
   }
 
-  /* Les surcouches se limitent au cadre. */
+  /* Les surcouches restent alignées sur la colonne. */
   .sheet,
   .sheet-scrim,
   .toast,

@@ -1,12 +1,11 @@
 /* ==========================================================================
    FASO STYLE — APPLICATION
-   PWA mobile, vanilla ES modules, aucune dépendance.
+   PWA mobile, JavaScript natif, aucune dépendance ni étape de build.
    ========================================================================== */
 
-import {
-  ATELIERS, CITIES, CITY_COLORS, CITY_REGIONS,
-  SEED_REVIEWS, SPECIALTIES, SERVICES, SORTS, PRICE_LABELS,
-} from "./data.js";
+/* Le catalogue est fourni par data.js, chargé juste avant ce fichier :
+   ATELIERS, CITIES, CITY_COLORS, CITY_REGIONS, SEED_REVIEWS,
+   SPECIALTIES, SERVICES, SORTS, PRICE_LABELS. */
 
 /* ---------------------------------------------------------------- helpers */
 const $  = (sel, root = document) => root.querySelector(sel);
@@ -469,7 +468,7 @@ function profileBody(a) {
       <input class="input" id="rv-author" placeholder="Votre nom" required maxlength="40">
       <textarea class="input" id="rv-comment" placeholder="Votre expérience avec cet atelier…" required maxlength="400"></textarea>
       <button class="btn btn--primary btn--block" type="submit">Publier mon avis</button>
-      <p class="field__hint">Prototype : l'avis reste sur votre appareil. Un vrai lancement modérerait les avis avant publication.</p>
+      <p class="field__hint">Votre avis est enregistré sur cet appareil.</p>
     </form>
 
     <button class="btn ${fav ? "btn--tonal" : "btn--outline"} btn--block" data-fav="${a.id}" style="margin-top:var(--space-5)">
