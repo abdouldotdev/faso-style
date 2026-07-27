@@ -332,9 +332,10 @@ function renderRequests() {
 }
 
 function renderStats() {
-  $("#statAteliers").textContent = ATELIERS.length;
-  $("#statVilles").textContent = CITIES.length;
-  $("#statAvis").textContent = ATELIERS.reduce((n, a) => n + reviewsOf(a.id).length, 0);
+  const set = (sel, value) => { const el = $(sel); if (el) el.textContent = value; };
+  set("#statAteliers", ATELIERS.length);
+  set("#statVilles", CITIES.length);
+  set("#statAvis", ATELIERS.reduce((n, a) => n + reviewsOf(a.id).length, 0));
 
   const perCity = CITIES.map((c) => ({
     ...c, n: ATELIERS.filter((a) => a.city === c.name).length,
@@ -358,6 +359,7 @@ function renderStats() {
 const sheet = $("#sheet");
 const scrim = $("#sheetScrim");
 let lastFocus = null;
+let sheetHideTimer;
 
 function openSheet({ head, body, foot }) {
   lastFocus = document.activeElement;
@@ -367,12 +369,14 @@ function openSheet({ head, body, foot }) {
   footEl.innerHTML = foot || "";
   footEl.hidden = !foot;
 
+  clearTimeout(sheetHideTimer);
   sheet.hidden = false;
   scrim.hidden = false;
-  requestAnimationFrame(() => {
-    sheet.classList.add("is-open");
-    scrim.classList.add("is-open");
-  });
+  // Reflow synchrone : la transition démarre sans callback différé, sinon une
+  // fermeture immédiate serait annulée par le rAF encore en attente.
+  void sheet.offsetHeight;
+  sheet.classList.add("is-open");
+  scrim.classList.add("is-open");
   document.body.style.overflow = "hidden";
   sheet.querySelector("button, input, a")?.focus({ preventScroll: true });
 }
@@ -381,7 +385,8 @@ function closeSheet() {
   sheet.classList.remove("is-open");
   scrim.classList.remove("is-open");
   document.body.style.overflow = "";
-  setTimeout(() => { sheet.hidden = true; scrim.hidden = true; }, 320);
+  clearTimeout(sheetHideTimer);
+  sheetHideTimer = setTimeout(() => { sheet.hidden = true; scrim.hidden = true; }, 320);
   lastFocus?.focus?.({ preventScroll: true });
 }
 

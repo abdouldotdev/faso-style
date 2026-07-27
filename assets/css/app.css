@@ -191,8 +191,11 @@
    Barre de recherche & facettes
    -------------------------------------------------------------------------- */
 .filters {
+  /* L'app bar est en dehors du conteneur de défilement (#main) :
+     le décalage de collage est donc nul, sans quoi la barre flotterait
+     56 px trop bas et recouvrirait la section suivante. */
   position: sticky;
-  top: calc(var(--appbar-h) + var(--safe-top));
+  top: 0;
   z-index: calc(var(--z-appbar) - 1);
   padding: var(--space-2) var(--space-4) var(--space-1);
   background: color-mix(in srgb, var(--bg) 94%, transparent);
