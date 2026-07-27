@@ -335,7 +335,6 @@ function renderStats() {
   $("#statAteliers").textContent = ATELIERS.length;
   $("#statVilles").textContent = CITIES.length;
   $("#statAvis").textContent = ATELIERS.reduce((n, a) => n + reviewsOf(a.id).length, 0);
-  $("#heroEyebrow").textContent = `${CITIES.length} villes · ${SPECIALTIES.length} spécialités`;
 
   const perCity = CITIES.map((c) => ({
     ...c, n: ATELIERS.filter((a) => a.city === c.name).length,
