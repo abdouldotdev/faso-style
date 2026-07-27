@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5">
+<title>Faso Style — L'annuaire des couturiers du Burkina Faso</title>
+<meta name="description" content="Faso Style rassemble les maisons de couture, stylistes et créateurs du Burkina Faso. Recherchez par ville, spécialité, budget ou délai, puis contactez directement sur WhatsApp.">
+<meta name="theme-color" content="#FBF8F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14110F" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+
+<!-- PWA -->
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Faso Style">
+<link rel="apple-touch-icon" href="./assets/icons/icon-180.png">
+<link rel="icon" type="image/svg+xml" href="./assets/icons/icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png">
+
+<!-- Social -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Faso Style — L'annuaire des couturiers du Burkina Faso">
+<meta property="og:description" content="Trouvez le couturier ou le styliste qu'il vous faut, ville par ville, et contactez-le sur WhatsApp.">
+<meta property="og:image" content="./assets/icons/og.png">
+<meta property="og:locale" content="fr_BF">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preload" href="./assets/fonts/poppins-latin-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./assets/fonts/poppins-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./assets/css/design-system.css">
+<link rel="stylesheet" href="./assets/css/app.css">
+</head>
+<body>
+
+<!-- ===================== icon sprite ===================== -->
+<svg style="position:absolute;width:0;height:0" aria-hidden="true" focusable="false">
+  <symbol id="ic-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>
+  </symbol>
+  <symbol id="ic-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 20s-7-4.6-7-9.3A4.2 4.2 0 0 1 12 8a4.2 4.2 0 0 1 7 2.7C19 15.4 12 20 12 20z"/>
+  </symbol>
+  <symbol id="ic-heart-fill" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20.4S4.2 15.4 4.2 10.3A4.9 4.9 0 0 1 12 7.2a4.9 4.9 0 0 1 7.8 3.1c0 5.1-7.8 10.1-7.8 10.1z"/></symbol>
+  <symbol id="ic-plus-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="M12 8.5v7M8.5 12h7"/>
+  </symbol>
+  <symbol id="ic-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.8" r="0.9" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="ic-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    <circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>
+  </symbol>
+  <symbol id="ic-sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+    <path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/>
+  </symbol>
+  <symbol id="ic-sort" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/>
+  </symbol>
+  <symbol id="ic-star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.45L12 17.45 6.2 20.5l1.1-6.45-4.7-4.6 6.5-.95z"/></symbol>
+  <symbol id="ic-whatsapp" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2A9.9 9.9 0 0 0 2.1 11.9a9.8 9.8 0 0 0 1.36 4.98L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01a9.9 9.9 0 0 0 9.93-9.9A9.9 9.9 0 0 0 12.04 2zm5.8 14.02c-.24.68-1.42 1.32-1.95 1.36-.5.05-.98.23-3.3-.69-2.77-1.09-4.53-3.92-4.67-4.1-.13-.19-1.11-1.48-1.11-2.82 0-1.34.7-2 .95-2.28.24-.27.53-.34.71-.34h.51c.16 0 .39-.06.6.46.24.57.8 1.97.87 2.11.07.14.12.3.02.49-.1.19-.15.3-.29.47l-.44.5c-.14.14-.29.3-.13.58.17.28.74 1.22 1.6 1.98 1.1.98 2.02 1.28 2.3 1.42.29.14.45.12.62-.07.17-.19.71-.83.9-1.11.19-.29.38-.24.63-.14.26.09 1.64.77 1.92.91.28.14.47.21.54.33.07.11.07.66-.17 1.34z"/></symbol>
+  <symbol id="ic-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6.2 3.5h3l1.4 3.6-2 1.4a11.5 11.5 0 0 0 5 5l1.4-2 3.6 1.4v3a1.6 1.6 0 0 1-1.7 1.6A14.6 14.6 0 0 1 4.6 5.2 1.6 1.6 0 0 1 6.2 3.5z"/>
+  </symbol>
+  <symbol id="ic-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3.5v11"/><path d="M8.2 7.3L12 3.5l3.8 3.8"/><path d="M6 12.5v6a1.5 1.5 0 0 0 1.5 1.5h9a1.5 1.5 0 0 0 1.5-1.5v-6"/>
+  </symbol>
+  <symbol id="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round">
+    <path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>
+  </symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 12.5l5 5 10-11"/>
+  </symbol>
+  <symbol id="ic-verified" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12 1.8l2.4 1.9 3-.3 1.1 2.8 2.7 1.4-.8 2.9.8 2.9-2.7 1.4-1.1 2.8-3-.3L12 22.2l-2.4-1.9-3 .3-1.1-2.8-2.7-1.4.8-2.9-.8-2.9 2.7-1.4 1.1-2.8 3 .3z"/>
+    <path fill="none" stroke="var(--surface)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8.4 12.2l2.5 2.5 4.7-5.2"/>
+  </symbol>
+  <symbol id="ic-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3.5v11"/><path d="M8.2 10.7L12 14.5l3.8-3.8"/><path d="M5 17.5v1.5a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5v-1.5"/>
+  </symbol>
+  <symbol id="ic-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 21s6.5-6 6.5-10.4A6.5 6.5 0 0 0 5.5 10.6C5.5 15 12 21 12 21z"/><circle cx="12" cy="10.4" r="2.4"/>
+  </symbol>
+  <symbol id="ic-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/>
+  </symbol>
+  <symbol id="ic-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 13.5h4l1.5 3h6l1.5-3h4"/><path d="M5.4 5.2h13.2l1.9 8.3v4a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5v-4z"/>
+  </symbol>
+  <symbol id="ic-scissors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="6.5" cy="6.5" r="2.5"/><circle cx="6.5" cy="17.5" r="2.5"/><path d="M8.7 8.2L20 18M8.7 15.8L20 6"/>
+  </symbol>
+  <symbol id="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+    <circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/>
+  </symbol>
+  <symbol id="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2z"/>
+  </symbol>
+  <symbol id="ic-history" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4.5V9h4.5"/><path d="M12 8v4.4l3 1.7"/>
+  </symbol>
+  <symbol id="ic-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3.5 16.5l5.5-5.5 3.5 3.5 7-7"/><path d="M15 7.5h4.5V12"/>
+  </symbol>
+  <symbol id="logo-mark" viewBox="0 0 120 120">
+    <circle cx="60" cy="60" r="56" fill="var(--surface)" stroke="var(--primary)" stroke-width="5"/>
+    <circle cx="60" cy="60" r="44" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="2 6"/>
+    <text x="60" y="75" text-anchor="middle" font-family="Poppins, sans-serif" font-size="42" font-weight="700" fill="var(--primary)">FS</text>
+  </symbol>
+</svg>
+
+<!-- ===================== app shell ===================== -->
+<div class="app">
+
+  <header class="appbar" id="appbar">
+    <div class="appbar__inner">
+      <svg class="appbar__logo" aria-hidden="true"><use href="#logo-mark"/></svg>
+      <div class="appbar__title">
+        <h1 id="appbarTitle">Faso Style</h1>
+        <p id="appbarSub">Annuaire des couturiers</p>
+      </div>
+      <button class="btn btn--icon" id="themeToggle" aria-label="Changer de thème">
+        <svg width="20" height="20" aria-hidden="true"><use href="#ic-moon"/></svg>
+      </button>
+    </div>
+  </header>
+  <div class="weave" aria-hidden="true"></div>
+
+  <main class="app__main" id="main">
+
+    <!-- ============ VUE : DÉCOUVRIR ============ -->
+    <section class="view is-active" id="view-decouvrir" role="tabpanel" aria-labelledby="tab-decouvrir">
+      <div class="hero">
+        <span class="hero__eyebrow" id="heroEyebrow">11 villes · 20 spécialités</span>
+        <h2>Chaque quartier a son couturier.<br><em>Trouvez-le enfin.</em></h2>
+        <p>Les maisons de couture, stylistes et créateurs du Burkina Faso réunis dans une seule application.</p>
+        <div class="hero__stats">
+          <div class="stat"><b id="statAteliers">—</b><span>ateliers</span></div>
+          <div class="stat"><b id="statVilles">—</b><span>villes</span></div>
+          <div class="stat"><b id="statAvis">—</b><span>avis</span></div>
+        </div>
+      </div>
+
+      <div id="installSlot"></div>
+
+      <!-- Recherche + facettes rapides -->
+      <div class="filters" id="filtersBar">
+        <div class="row gap-2">
+          <label class="search grow">
+            <svg aria-hidden="true"><use href="#ic-search"/></svg>
+            <input id="searchInput" type="search" inputmode="search" autocomplete="off"
+                   placeholder="Nom, quartier, spécialité, service…" aria-label="Rechercher un couturier">
+            <button class="search__clear" id="searchClear" hidden aria-label="Effacer la recherche">
+              <svg width="14" height="14" aria-hidden="true"><use href="#ic-close"/></svg>
+            </button>
+          </label>
+          <button class="btn btn--outline filter-btn" id="openFilters" aria-label="Filtres et tri">
+            <svg width="19" height="19" aria-hidden="true"><use href="#ic-sliders"/></svg>
+            <span class="filter-btn__badge" id="filterBadge" hidden>0</span>
+          </button>
+        </div>
+        <div id="suggestSlot"></div>
+        <div class="rail" id="cityRail" role="group" aria-label="Filtrer par ville"></div>
+        <div class="rail" id="specRail" role="group" aria-label="Filtrer par spécialité"></div>
+      </div>
+
+      <!-- Coup de cœur -->
+      <section class="section carousel-section" id="featuredSection">
+        <div class="section__head row between">
+          <div>
+            <h2 class="t-title-md">Coup de cœur</h2>
+            <p>Maisons mises en avant par la rédaction</p>
+          </div>
+        </div>
+        <div class="carousel" id="featuredRail"></div>
+      </section>
+
+      <!-- Historique -->
+      <section class="section carousel-section" id="recentSection" hidden>
+        <div class="section__head">
+          <h2 class="t-title-md">Consultés récemment</h2>
+        </div>
+        <div class="carousel" id="recentRail"></div>
+      </section>
+
+      <div class="results-bar">
+        <span id="resultCount">—</span>
+        <div class="row gap-2">
+          <button class="btn btn--ghost btn--sm" id="sortBtn">
+            <svg width="15" height="15" aria-hidden="true"><use href="#ic-sort"/></svg>
+            <span id="sortLabel">Pertinence</span>
+          </button>
+          <button class="btn btn--ghost btn--sm" id="resetFilters" hidden>Effacer</button>
+        </div>
+      </div>
+
+      <div class="list" id="listAteliers"></div>
+
+      <div class="legal">
+        <p>Prototype de démonstration — les fiches et les avis présentés sont des données d'illustration.</p>
+        <p>Lors d'un lancement réel, chaque maison de couture serait recensée avec son consentement et ses vraies coordonnées.</p>
+      </div>
+    </section>
+
+    <!-- ============ VUE : FAVORIS ============ -->
+    <section class="view" id="view-favoris" role="tabpanel" aria-labelledby="tab-favoris">
+      <div class="section">
+        <div class="section__head">
+          <h2>Mes favoris</h2>
+          <p>Vos ateliers enregistrés restent accessibles hors connexion.</p>
+        </div>
+      </div>
+      <div class="list" id="listFavoris"></div>
+    </section>
+
+    <!-- ============ VUE : REJOINDRE ============ -->
+    <section class="view" id="view-rejoindre" role="tabpanel" aria-labelledby="tab-rejoindre">
+      <div class="section">
+        <div class="section__head">
+          <h2>Inscrire mon atelier</h2>
+          <p>L'inscription de base est gratuite. Une mise en avant « Coup de cœur » est proposée aux maisons qui le souhaitent.</p>
+        </div>
+
+        <form id="partnerForm" class="stack gap-4" novalidate>
+          <div class="field">
+            <label class="field__label" for="p-name">Nom de la maison ou du styliste</label>
+            <input class="input" id="p-name" name="name" type="text" required autocomplete="organization" placeholder="Atelier…">
+            <span class="field__error" data-error-for="p-name" hidden></span>
+          </div>
+          <div class="field">
+            <label class="field__label" for="p-city">Ville</label>
+            <select class="input" id="p-city" name="city" required>
+              <option value="" disabled selected>Choisir une ville</option>
+            </select>
+            <span class="field__error" data-error-for="p-city" hidden></span>
+          </div>
+          <div class="field">
+            <label class="field__label" for="p-quartier">Quartier</label>
+            <input class="input" id="p-quartier" name="quartier" type="text" placeholder="Gounghin, Sya, Secteur 4…">
+          </div>
+          <div class="field">
+            <label class="field__label" for="p-spec">Spécialité principale</label>
+            <input class="input" id="p-spec" name="spec" type="text" required list="specList" placeholder="Mariage, broderie, Faso Dan Fani…">
+            <datalist id="specList"></datalist>
+            <span class="field__error" data-error-for="p-spec" hidden></span>
+          </div>
+          <div class="field">
+            <label class="field__label">Services proposés</label>
+            <div class="rail rail--wrap" id="pServices"></div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="p-phone">Numéro WhatsApp</label>
+            <input class="input" id="p-phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="+226 70 00 00 00">
+            <span class="field__hint">Format international — c'est ce numéro que les clients contacteront.</span>
+            <span class="field__error" data-error-for="p-phone" hidden></span>
+          </div>
+          <button class="btn btn--primary btn--block" type="submit">Envoyer ma demande</button>
+          <p class="field__hint" style="text-align:center">
+            Prototype : la demande est enregistrée sur votre appareil uniquement, aucune donnée n'est transmise à un serveur.
+          </p>
+        </form>
+
+        <div id="requestsSlot" style="margin-top:var(--space-7)"></div>
+      </div>
+    </section>
+
+    <!-- ============ VUE : INFOS ============ -->
+    <section class="view" id="view-infos" role="tabpanel" aria-labelledby="tab-infos">
+      <div class="section">
+        <div class="section__head">
+          <h2>Comment ça marche</h2>
+          <p>Trois étapes, du besoin du client jusqu'au rendez-vous chez le couturier.</p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <span class="step__idx">1</span>
+            <div>
+              <h3>Cherchez</h3>
+              <p>Filtrez par ville, spécialité, budget, délai ou service : livraison, retouches, essayage à domicile, location de tenues…</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step__idx">2</span>
+            <div>
+              <h3>Comparez</h3>
+              <p>Chaque fiche présente le quartier, le délai indicatif, le niveau de prix, la note moyenne et les avis clients.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step__idx">3</span>
+            <div>
+              <h3>Contactez</h3>
+              <p>Un appui ouvre une conversation WhatsApp avec l'atelier, message déjà pré-rempli — ou lance un appel direct.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section__head"><h2>Le catalogue en chiffres</h2></div>
+        <div class="stat-grid" id="statGrid"></div>
+      </div>
+
+      <div class="section">
+        <div class="section__head"><h2>Installer l'application</h2></div>
+        <div class="card" style="padding:var(--space-5)">
+          <p class="t-body t-muted" id="installHelp">
+            Faso Style fonctionne comme une application : ajoutez-la à votre écran d'accueil pour y accéder hors connexion.
+          </p>
+          <div id="installCta" style="margin-top:var(--space-4)"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section__head"><h2>Données & confidentialité</h2></div>
+        <div class="card" style="padding:var(--space-5)">
+          <p class="t-body t-muted">
+            Favoris, avis, historique et demandes d'inscription sont stockés uniquement dans le navigateur de votre appareil.
+            Aucun compte, aucun serveur, aucun traceur.
+          </p>
+          <button class="btn btn--outline btn--block" id="resetData" style="margin-top:var(--space-4)">
+            Effacer mes données locales
+          </button>
+        </div>
+      </div>
+
+      <div class="legal">
+        <p>Faso Style — prototype pédagogique, données d'illustration.</p>
+        <p>Fait pour les couturiers et stylistes du Burkina Faso.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="tabbar" role="tablist" aria-label="Navigation principale">
+    <button class="tab" role="tab" id="tab-decouvrir" data-view="decouvrir" aria-selected="true">
+      <svg aria-hidden="true"><use href="#ic-compass"/></svg><span>Découvrir</span>
+    </button>
+    <button class="tab" role="tab" id="tab-favoris" data-view="favoris" aria-selected="false">
+      <svg aria-hidden="true"><use href="#ic-heart"/></svg><span>Favoris</span>
+      <span class="tab__badge" id="favBadge" hidden>0</span>
+    </button>
+    <button class="tab" role="tab" id="tab-rejoindre" data-view="rejoindre" aria-selected="false">
+      <svg aria-hidden="true"><use href="#ic-plus-circle"/></svg><span>Rejoindre</span>
+    </button>
+    <button class="tab" role="tab" id="tab-infos" data-view="infos" aria-selected="false">
+      <svg aria-hidden="true"><use href="#ic-info"/></svg><span>Infos</span>
+    </button>
+  </nav>
+
+  <!-- ===================== bottom sheet (générique) ===================== -->
+  <div class="sheet-scrim" id="sheetScrim" hidden></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
+    <div class="sheet__grip" aria-hidden="true"></div>
+    <div class="sheet__head" id="sheetHead"></div>
+    <div class="sheet__body" id="sheetBody"></div>
+    <div class="sheet__foot" id="sheetFoot" hidden></div>
+  </div>
+
+  <!-- ===================== overlays ===================== -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+    <svg aria-hidden="true"><use href="#ic-check"/></svg>
+    <span id="toastText"></span>
+  </div>
+  <div class="offline-bar" id="offlineBar" role="status">Mode hors connexion — données servies depuis le cache</div>
+</div>
+
+<script type="module" src="./assets/js/app.js"></script>
+</body>
+</html>

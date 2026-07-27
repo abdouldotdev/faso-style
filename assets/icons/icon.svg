@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Faso Style">
+  <defs>
+    <clipPath id="disc"><circle cx="256" cy="256" r="150"/></clipPath>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2A5289"/>
+      <stop offset="1" stop-color="#1A3559"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- disque écru -->
+  <circle cx="256" cy="256" r="150" fill="#FBF6EC"/>
+
+  <!-- tissage : chaîne verticale indigo, trame horizontale ocre -->
+  <g clip-path="url(#disc)">
+    <g fill="#24487A">
+      <rect x="118" y="106" width="26" height="300"/>
+      <rect x="180" y="106" width="26" height="300"/>
+      <rect x="242" y="106" width="26" height="300"/>
+      <rect x="304" y="106" width="26" height="300"/>
+      <rect x="366" y="106" width="26" height="300"/>
+    </g>
+    <g fill="#B5651D">
+      <rect x="106" y="150" width="300" height="26"/>
+      <rect x="106" y="212" width="300" height="26"/>
+      <rect x="106" y="274" width="300" height="26"/>
+      <rect x="106" y="336" width="300" height="26"/>
+    </g>
+    <!-- entrelacement : on repasse la chaîne par-dessus une trame sur deux -->
+    <g fill="#24487A">
+      <rect x="118" y="150" width="26" height="26"/>
+      <rect x="242" y="150" width="26" height="26"/>
+      <rect x="366" y="150" width="26" height="26"/>
+      <rect x="180" y="212" width="26" height="26"/>
+      <rect x="304" y="212" width="26" height="26"/>
+      <rect x="118" y="274" width="26" height="26"/>
+      <rect x="242" y="274" width="26" height="26"/>
+      <rect x="366" y="274" width="26" height="26"/>
+      <rect x="180" y="336" width="26" height="26"/>
+      <rect x="304" y="336" width="26" height="26"/>
+    </g>
+  </g>
+
+  <circle cx="256" cy="256" r="150" fill="none" stroke="#24487A" stroke-width="14"/>
+  <circle cx="256" cy="256" r="172" fill="none" stroke="#B5651D" stroke-width="6" stroke-dasharray="6 22" stroke-linecap="round"/>
+</svg>
