@@ -215,8 +215,8 @@ function atelierRow(a) {
       </p>
     </div>
     <button class="fav ${fav ? "is-on" : ""}" data-fav="${a.id}"
-            aria-pressed="${fav}" aria-label="${fav ? "Retirer des favoris" : "Ajouter aux favoris"}">
-      ${icon(fav ? "ic-heart-fill" : "ic-heart", 20)}
+            aria-pressed="${fav}" aria-label="${fav ? "Retirer du panier" : "Ajouter au panier"}">
+      ${icon(fav ? "ic-cart-fill" : "ic-cart", 19)}
     </button>
   </article>`;
 }
@@ -320,7 +320,7 @@ function selectionMessage() {
   ].join("\n"));
 
   return [
-    `Bonjour, voici ma sélection Faso Style (${plural(items.length, "atelier", "ateliers")}) :`,
+    `Bonjour, je souhaite passer commande via Faso Style (${plural(items.length, "atelier", "ateliers")}) :`,
     "",
     lignes.join("\n\n"),
     "",
@@ -340,13 +340,11 @@ function renderSelectionBar() {
   const html = n === 0 ? "" : `
     <div class="selection-bar">
       <div class="grow">
-        <b class="t-title-sm">${plural(n, "atelier sélectionné", "ateliers sélectionnés")}</b>
-        <span class="t-body-sm t-muted">${
-          n === 1 ? "Ouvre la conversation avec l'atelier"
-                  : "Envoie le récapitulatif complet de votre sélection"}</span>
+        <b class="t-title-sm">${plural(n, "atelier", "ateliers")}</b>
+        <span class="t-body-sm t-muted">Récapitulatif sur WhatsApp</span>
       </div>
       <button class="btn btn--primary" data-send-selection>
-        ${icon("ic-whatsapp", 18, "icon")} Envoyer
+        ${icon("ic-cart", 18, "icon")} Valider commande
       </button>
     </div>`;
 
@@ -364,8 +362,8 @@ function renderFavoris() {
   const items = store.favorites.map((id) => byId[id]).filter(Boolean);
   $("#listFavoris").innerHTML = items.length
     ? items.map(atelierRow).join("")
-    : emptyState("Pas encore de favori",
-        "Appuyez sur le cœur d'un atelier pour le retrouver ici, même hors connexion.", "ic-heart");
+    : emptyState("Votre panier est vide",
+        "Appuyez sur l'icône panier d'un atelier pour l'ajouter à votre commande.", "ic-cart");
 
   const badge = $("#favBadge");
   badge.hidden = items.length === 0;
@@ -539,7 +537,7 @@ function profileBody(a) {
     </form>
 
     <button class="btn ${fav ? "btn--tonal" : "btn--outline"} btn--block" data-fav="${a.id}" style="margin-top:var(--space-5)">
-      ${icon(fav ? "ic-heart-fill" : "ic-heart", 18)} ${fav ? "Retiré des favoris" : "Ajouter aux favoris"}
+      ${icon(fav ? "ic-cart-fill" : "ic-cart", 18)} ${fav ? "Retirer du panier" : "Ajouter au panier"}
     </button>`;
 }
 
@@ -734,8 +732,8 @@ function refreshFiltersSheet() {
 /* --------------------------------------------------------------- actions */
 function toggleFav(id) {
   const i = store.favorites.indexOf(id);
-  if (i >= 0) { store.favorites.splice(i, 1); toast("Retiré de vos favoris"); }
-  else { store.favorites.unshift(id); toast("Ajouté à vos favoris"); }
+  if (i >= 0) { store.favorites.splice(i, 1); toast("Retiré du panier"); }
+  else { store.favorites.unshift(id); toast("Ajouté au panier"); }
   save();
   haptic();
   renderList();
@@ -760,7 +758,7 @@ async function share(id) {
 }
 
 /** Vues atteignables ; « rejoindre » n'a pas d'onglet, on y entre depuis le profil. */
-const VIEWS = ["decouvrir", "favoris", "rejoindre", "profil"];
+const VIEWS = ["decouvrir", "panier", "rejoindre", "profil"];
 const PARENT_VIEW = { rejoindre: "profil" };
 
 function setView(view) {
@@ -777,7 +775,7 @@ function setView(view) {
 
   const titles = {
     decouvrir: ["Faso Style", "Annuaire des couturiers"],
-    favoris:   ["Favoris", "Vos ateliers enregistrés"],
+    panier:    ["Mon panier", "Ateliers retenus"],
     rejoindre: ["Inscrire mon atelier", "Rejoindre l'annuaire"],
     profil:    ["Profil", "Réglages et informations"],
   }[view];
@@ -1135,7 +1133,8 @@ function route() {
   const h = location.hash.replace(/^#\//, "");
   const [seg, param] = h.split("/");
   if (seg === "atelier" && byId[param]) { setView("decouvrir"); openProfile(param); return; }
-  if (seg === "infos") { setView("profil"); return; }   // ancien lien
+  if (seg === "infos") { setView("profil"); return; }    // anciens liens
+  if (seg === "favoris") { setView("panier"); return; }
   if (VIEWS.includes(seg)) setView(seg);
 }
 

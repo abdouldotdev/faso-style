@@ -12,11 +12,12 @@
   width: 100%;
   max-width: var(--shell-max);
   margin: 0 auto;
-  min-height: 100svh;
+  height: 100svh;
   background: var(--bg);
   position: relative;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 /* Le cadre « téléphone » sur grand écran est défini en fin de fichier,
@@ -61,12 +62,10 @@
    -------------------------------------------------------------------------- */
 .app__main {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding-bottom: var(--space-6);
-}
-@media (max-width: 759px) {
-  .app__main { padding-bottom: calc(var(--tabbar-h) + var(--safe-bottom) + var(--space-6)); }
 }
 .view { display: none; }
 .view.is-active { display: block; animation: view-in var(--dur-base) var(--ease-out); }
@@ -86,12 +85,12 @@
    -------------------------------------------------------------------------- */
 .tabbar--3 { grid-template-columns: repeat(3, 1fr); }
 .tabbar {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  /* Dans le flux plutôt qu'en position fixed : un élément fixed se cale sur
+     la fenêtre (barre de défilement comprise) et se décalait donc de la
+     colonne, laissant un vide sur le côté. */
+  position: relative;
   z-index: var(--z-tabbar);
-  width: min(100%, var(--shell-max));
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   padding-bottom: var(--safe-bottom);
@@ -386,7 +385,7 @@
   color: var(--text-subtle);
   transition: color var(--dur-fast), transform var(--dur-fast) var(--ease-spring), background var(--dur-fast);
 }
-.fav.is-on { color: var(--danger); background: var(--danger-soft); }
+.fav.is-on { color: var(--primary); background: var(--primary-soft); }
 .fav:active { transform: scale(1.18); }
 
 /* --------------------------------------------------------------------------
@@ -675,7 +674,7 @@
 .banner__text span { font: var(--text-body-sm); color: var(--text-muted); }
 
 .offline-bar {
-  position: fixed;
+  position: absolute;
   top: var(--safe-top);
   left: 50%;
   transform: translate(-50%, -160%);
@@ -721,18 +720,19 @@
 }
 /* Variante flottante (accueil) : toujours visible au-dessus des onglets. */
 .selection-bar--float {
-  position: fixed;
+  position: absolute;
   bottom: calc(var(--tabbar-h) + var(--safe-bottom) + var(--space-2));
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(calc(100% - var(--space-7)), calc(var(--shell-max) - var(--space-7)));
+  left: var(--space-4);
+  right: var(--space-4);
+  width: auto;
   margin: 0;
   z-index: calc(var(--z-tabbar) - 1);
 }
 /* Réserve la place du panier flottant pour ne masquer aucune fiche. */
-.app.has-selection .app__main { padding-bottom: calc(var(--tabbar-h) + var(--safe-bottom) + 96px); }
+.app.has-selection .app__main { padding-bottom: 104px; }
 
 .selection-bar b { display: block; }
+.selection-bar .btn { flex: none; }
 .selection-bar span { display: block; margin-top: 1px; }
 
 .legal .credit {
@@ -770,31 +770,8 @@
   .app {
     --safe-top: 0px;
     --safe-bottom: 0px;
-    height: 100svh;
-    min-height: 100svh;
     width: var(--shell-max);
     border-left: 1px solid var(--border);
     border-right: 1px solid var(--border);
   }
-
-  .app__main { flex: 1; min-height: 0; padding-bottom: var(--space-6); }
-
-  /* Barre d'onglets : dans le flux, donc calée en bas de la colonne. */
-  .tabbar {
-    position: relative;
-    left: auto;
-    bottom: auto;
-    transform: none;
-    width: 100%;
-  }
-
-  /* Les surcouches restent alignées sur la colonne. */
-  .sheet,
-  .sheet-scrim,
-  .toast,
-  .offline-bar,
-  .selection-bar--float { position: absolute; }
-  .selection-bar--float { bottom: calc(var(--tabbar-h) + var(--space-2)); }
-  .sheet { max-height: 88%; }
-  .toast { bottom: calc(var(--tabbar-h) + var(--space-4)); }
 }

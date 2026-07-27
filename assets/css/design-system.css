@@ -593,7 +593,7 @@ select.input {
    15. COMPONENT — bottom sheet
    -------------------------------------------------------------------------- */
 .sheet-scrim {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: var(--z-sheet);
   background: var(--overlay);
@@ -605,7 +605,7 @@ select.input {
 .sheet-scrim.is-open { opacity: 1; pointer-events: auto; }
 
 .sheet {
-  position: fixed;
+  position: absolute;
   left: 50%;
   bottom: 0;
   z-index: calc(var(--z-sheet) + 1);
@@ -646,7 +646,7 @@ select.input {
    16. COMPONENT — toast
    -------------------------------------------------------------------------- */
 .toast {
-  position: fixed;
+  position: absolute;
   left: 50%;
   bottom: calc(var(--tabbar-h) + var(--safe-bottom) + var(--space-4));
   z-index: var(--z-toast);

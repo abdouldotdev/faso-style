@@ -25,15 +25,15 @@ Ouahigouya, Banfora, Fada N'Gourma, Kaya, Dédougou, Gaoua, Tenkodogo, Dori),
 services, distribution des notes, avis clients, publication d'un avis,
 contact WhatsApp pré-rempli, appel direct, partage natif.
 
-**Sélection multiple** — les favoris forment un panier : un bouton envoie sur
-WhatsApp le récapitulatif complet (nom, ville, quartier, spécialités, délai,
-budget, numéro de chaque atelier). Avec un seul atelier retenu, le bouton ouvre
-directement sa conversation.
+**Panier** — les ateliers retenus forment une commande. « Valider commande »
+envoie sur WhatsApp le récapitulatif complet : nom, ville, quartier,
+spécialités, délai et budget de chaque atelier. Le panier reste visible depuis
+l'accueil comme depuis son propre onglet.
 
-**Navigation** — trois onglets : Découvrir, Favoris, Profil. Le profil donne
+**Navigation** — trois onglets : Découvrir, Panier, Profil. Le profil donne
 accès à « Comment ça marche » (feuille) et à l'inscription d'un atelier.
 
-**Le reste** — favoris persistants, historique de consultation, mise en avant
+**Le reste** — panier persistant, historique de consultation, mise en avant
 éditoriale, thème clair/sombre, indicateur hors connexion, installation sur
 l'écran d'accueil.
 

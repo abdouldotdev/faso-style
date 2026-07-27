@@ -30,8 +30,8 @@
 
 <link rel="preload" href="./assets/fonts/poppins-latin-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="./assets/fonts/poppins-latin-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="./assets/css/design-system.css?v=5">
-<link rel="stylesheet" href="./assets/css/app.css?v=5">
+<link rel="stylesheet" href="./assets/css/design-system.css?v=6">
+<link rel="stylesheet" href="./assets/css/app.css?v=6">
 </head>
 <body>
 
@@ -103,6 +103,14 @@
   </symbol>
   <symbol id="ic-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
     <path d="M3.5 16.5l5.5-5.5 3.5 3.5 7-7"/><path d="M15 7.5h4.5V12"/>
+  </symbol>
+  <symbol id="ic-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2.8 3.6h2.1l.6 2.9m0 0l1.7 7.9a1.9 1.9 0 0 0 1.85 1.5h7.3a1.9 1.9 0 0 0 1.85-1.45L19.9 6.5z"/>
+    <circle cx="9.6" cy="19.6" r="1.5"/><circle cx="17.2" cy="19.6" r="1.5"/>
+  </symbol>
+  <symbol id="ic-cart-fill" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M2.8 2.6h2.1a1 1 0 0 1 .98.8l.42 2.1H19.9a1 1 0 0 1 .97 1.24l-1.6 6.45a2.9 2.9 0 0 1-2.82 2.21h-7.3a2.9 2.9 0 0 1-2.83-2.29L4.08 4.6H2.8a1 1 0 1 1 0-2z"/>
+    <circle cx="9.6" cy="19.6" r="1.7" fill="currentColor"/><circle cx="17.2" cy="19.6" r="1.7" fill="currentColor"/>
   </symbol>
   <symbol id="ic-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="8.2" r="3.6"/><path d="M4.8 20a7.2 7.2 0 0 1 14.4 0"/>
@@ -200,12 +208,12 @@
 
     </section>
 
-    <!-- ============ VUE : FAVORIS ============ -->
-    <section class="view" id="view-favoris" role="tabpanel" aria-labelledby="tab-favoris">
+    <!-- ============ VUE : PANIER ============ -->
+    <section class="view" id="view-panier" role="tabpanel" aria-labelledby="tab-panier">
       <div class="section">
         <div class="section__head">
-          <h2>Mes favoris</h2>
-          <p>Vos ateliers enregistrés restent accessibles hors connexion.</p>
+          <h2>Mon panier</h2>
+          <p>Les ateliers retenus restent accessibles hors connexion.</p>
         </div>
       </div>
       <div class="list" id="listFavoris"></div>
@@ -321,8 +329,8 @@
     <button class="tab" role="tab" id="tab-decouvrir" data-view="decouvrir" aria-selected="true">
       <svg aria-hidden="true"><use href="#ic-compass"/></svg><span>Découvrir</span>
     </button>
-    <button class="tab" role="tab" id="tab-favoris" data-view="favoris" aria-selected="false">
-      <svg aria-hidden="true"><use href="#ic-heart"/></svg><span>Favoris</span>
+    <button class="tab" role="tab" id="tab-panier" data-view="panier" aria-selected="false">
+      <svg aria-hidden="true"><use href="#ic-cart"/></svg><span>Panier</span>
       <span class="tab__badge" id="favBadge" hidden>0</span>
     </button>
     <button class="tab" role="tab" id="tab-profil" data-view="profil" aria-selected="false">
@@ -347,7 +355,7 @@
   <div class="offline-bar" id="offlineBar" role="status">Mode hors connexion — données servies depuis le cache</div>
 </div>
 
-<script src="./assets/js/data.js?v=5" defer></script>
-<script src="./assets/js/app.js?v=5" defer></script>
+<script src="./assets/js/data.js?v=6" defer></script>
+<script src="./assets/js/app.js?v=6" defer></script>
 </body>
 </html>
