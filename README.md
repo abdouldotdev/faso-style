@@ -34,7 +34,7 @@ l'accueil comme depuis son propre onglet.
 accès à « Comment ça marche » (feuille) et à l'inscription d'un atelier.
 
 **Le reste** — panier persistant, historique de consultation, mise en avant
-éditoriale, thème clair/sombre, indicateur hors connexion, installation sur
+éditoriale, thème clair par défaut (bascule sombre manuelle), indicateur hors connexion, installation sur
 l'écran d'accueil.
 
 Toutes les prises de contact aboutissent au **+226 65 91 52 20**

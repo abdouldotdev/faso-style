@@ -91,7 +91,6 @@
 /* --------------------------------------------------------------------------
    Tab bar
    -------------------------------------------------------------------------- */
-.tabbar--3 { grid-template-columns: repeat(3, 1fr); }
 .tabbar {
   /* Dans le flux plutôt qu'en position fixed : un élément fixed se cale sur
      la fenêtre (barre de défilement comprise) et se décalait donc de la
@@ -99,8 +98,11 @@
   position: relative;
   z-index: var(--z-tabbar);
   width: 100%;
+  /* Colonnes déduites du nombre d'onglets : un gabarit figé laissait une
+     colonne vide sur le côté dès qu'un onglet était retiré. */
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   padding-bottom: var(--safe-bottom);
   background: var(--bg-elevated);
   border-top: 1px solid var(--border);

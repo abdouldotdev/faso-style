@@ -824,12 +824,13 @@ function renderSuggestions() {
 }
 
 /* ------------------------------------------------------------------ theme */
+/** Mode jour par défaut : la préférence système n'est suivie que si
+    l'utilisateur a explicitement choisi un thème. */
 function applyTheme(mode) {
   const root = document.documentElement;
-  if (mode) root.dataset.theme = mode; else delete root.dataset.theme;
-  const dark = mode
-    ? mode === "dark"
-    : matchMedia("(prefers-color-scheme: dark)").matches;
+  const resolved = mode === "dark" ? "dark" : "light";
+  root.dataset.theme = resolved;
+  const dark = resolved === "dark";
   $("#themeToggle").innerHTML = icon(dark ? "ic-sun" : "ic-moon", 20);
   $$('meta[name="theme-color"]').forEach((m) => m.remove());
   const meta = document.createElement("meta");
@@ -904,10 +905,7 @@ function bind() {
   $("#sortBtn").addEventListener("click", () => { haptic(); filtersSheet(); });
   $("#resetFilters").addEventListener("click", () => { clearFilters(); toast("Filtres effacés"); });
   $("#themeToggle").addEventListener("click", () => {
-    const dark = document.documentElement.dataset.theme
-      ? document.documentElement.dataset.theme === "dark"
-      : matchMedia("(prefers-color-scheme: dark)").matches;
-    store.theme = dark ? "light" : "dark";
+    store.theme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
     save();
     applyTheme(store.theme);
   });

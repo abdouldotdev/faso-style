@@ -4,7 +4,7 @@
    reste du réseau en stale-while-revalidate.
    ========================================================================== */
 
-const VERSION = "faso-style-v8";
+const VERSION = "faso-style-v9";
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-runtime`;
 
