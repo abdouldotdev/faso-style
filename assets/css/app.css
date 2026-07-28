@@ -12,6 +12,10 @@
   width: 100%;
   max-width: var(--shell-max);
   margin: 0 auto;
+  /* Repli obligatoire : sans prise en charge de svh, la déclaration est
+     ignorée, la colonne prend la hauteur du contenu et la barre d'onglets
+     se retrouve sous la ligne de flottaison. */
+  height: 100vh;
   height: 100svh;
   background: var(--bg);
   position: relative;
