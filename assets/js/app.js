@@ -341,7 +341,6 @@ function renderSelectionBar() {
     <div class="selection-bar">
       <div class="grow">
         <b class="t-title-sm">${plural(n, "atelier", "ateliers")}</b>
-        <span class="t-body-sm t-muted">Récapitulatif sur WhatsApp</span>
       </div>
       <button class="btn btn--primary" data-send-selection>
         ${icon("ic-cart", 18, "icon")} Valider commande

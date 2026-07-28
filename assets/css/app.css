@@ -70,7 +70,11 @@
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding-bottom: var(--space-6);
+  /* Barre de défilement masquée : sinon elle est dessinée à l'intérieur de
+     la colonne et décale le contenu de 15 px par rapport aux onglets. */
+  scrollbar-width: none;
 }
+.app__main::-webkit-scrollbar { display: none; }
 .view { display: none; }
 .view.is-active { display: block; animation: view-in var(--dur-base) var(--ease-out); }
 @keyframes view-in {

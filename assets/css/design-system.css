@@ -264,10 +264,16 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
   margin: 0;
+  /* La page ne défile pas : seule la coque le fait. Sans cela le document
+     affiche sa propre barre de défilement, qui décentre la colonne et
+     laisse un vide sur le côté. */
+  height: 100%;
+  overflow: hidden;
   background: var(--bg);
   color: var(--text);
   font: var(--text-body-md);
@@ -621,6 +627,7 @@ select.input {
   overscroll-behavior: contain;
 }
 .sheet.is-open { transform: translate(-50%, 0); }
+.sheet__body::-webkit-scrollbar { display: none; }
 .sheet__grip {
   width: 40px;
   height: 4px;
@@ -636,6 +643,7 @@ select.input {
 }
 .sheet__body {
   overflow-y: auto;
+  scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   padding: var(--space-5);
   padding-bottom: calc(var(--space-6) + var(--safe-bottom));
